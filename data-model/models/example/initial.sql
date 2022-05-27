@@ -1,1 +1,1 @@
-SELECT * from {{ source('sources', 'charges') }}
+select * from `toggl-analytics.sources.charges`
