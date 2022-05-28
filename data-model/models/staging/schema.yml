@@ -1,13 +1,5 @@
 
 version: 2
-sources:
-  
-  - name: sources
-    description: 'Source dataset for extracted data'
-    database: toggl-analytics
-    tables:
-      - name: workspaces
-
 
 # models:
   # - name: my_first_dbt_model
