@@ -33,8 +33,8 @@ if(total.total_amount_spent is null, 0, total.total_amount_spent) as total_amoun
 attr.source,
 attr.medium,
 if(trial.user_id is null, false, true) as trial_taken,
-if(user_count.max_workspace_users is null, 1, uc.max_workspace_users) as max_workspace_users,
-if(user_count.min_workspace_users is null, 1, uc.min_workspace_users) as min_workspace_users,
+if(user_count.max_workspace_users is null, 1, user_count.max_workspace_users) as max_workspace_users,
+if(user_count.min_workspace_users is null, 1, user_count.min_workspace_users) as min_workspace_users,
 from  ws
 left join total on ws.user_id= total.user_id
 left join attr on ws.user_id= attr.user_id

@@ -11,7 +11,7 @@ d.started_on,
 d.finished_on,
 d.sub_user_count as user_count,
 d.pricing_plan_id,
-d.amount_usd,
+if(d.amount_usd is null, 0, d.amount_usd) as amount_usd,
 us.user_id as user_id
 from data d
 left join {{ref('base_workspaces')}} us
