@@ -6,9 +6,7 @@ sources:
     description: 'Source dataset for extracted data'
     database: toggl-analytics
     tables:
-      - name: ga_sessions
-      - name: subscription_periods
-      - name: workspaces
+      - name: charges
 
 
 # models:
