@@ -12,7 +12,7 @@ sources:
 
 models:
   - name: dim_users
-    description: "Users table. Each row represents a unique user and all details regarding that user"
+    description: "{{ doc('dim_users') }}"
     columns:
       - name: user_id
         description: "Id of the user"
@@ -54,7 +54,7 @@ models:
         test:
           - not_null
   - name: dim_workspaces
-    description: "Workspace table. Each row represents a unique workspace and all details regarding it"
+    description: "{{ doc('dim_workspaces') }}"
     columns:
       - name: workspace_id
         description: "ID of the workspace"
@@ -92,7 +92,7 @@ models:
         test:
           - not_null
   - name: fct_events
-    description: "Events table. Contains records for all visitors on toggle site. Including those who did not signup. Other details include whether the user requested a demo, their campaign,source etc."
+    description: "{{ doc('fct_events') }}"
     columns:
       - name: user_id
         description: "ID of the user. Will be blank if the user has not signed up"
@@ -113,7 +113,7 @@ models:
           - accepted_values:
                 values: [true, false]
   - name: fct_payments
-    description: "Payments table. Each row represents a unique payment from a workspace to Toggle"
+    description: "{{ doc('fct_payments') }}"
     columns:
       - name: charge_month
         description: "Month for which the payment was made"
