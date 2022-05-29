@@ -1,0 +1,164 @@
+
+version: 2
+sources:
+  
+  - name: sources
+    description: 'Source dataset for extracted data'
+    database: toggl-analytics
+    tables:
+      - name: pricing_plans
+      - name: users
+
+
+models:
+  - name: dim_users
+    description: "Users table. Each row represents a unique user and all details regarding that user"
+    columns:
+      - name: user_id
+        description: "Id of the user"
+        tests:
+          - unique
+          - not_null
+      - name: created_at
+        description: "Date when the user first visited/interacted with the site"
+      - name: activated_at
+        description: "Date of signup"
+      - name: deleted_at
+        description: "Date of account deletion"
+      - name: total_amount_spent
+        description: "Total Amount paid by the user for all owned workspaces"
+      - name: owned_workspaces
+        description: "Number of workspaces owned by the user"
+      - name: source
+        description: "The source through which user first got to know about Toggl"
+        test:
+          - not_null
+      - name: medium
+        description: "The medium through which user first got to know about Toggl"
+        test:
+          - not_null
+      - name: campaign
+        description: "Campaign through which user was targeted"
+        test:
+          - not_null
+      - name: number_of_trials_taken
+        description: "Number of trials availed over all workspaces"
+        test:
+          - not_null
+      - name: max_workspace_users
+        description: "Max of the user count across all owned workspaces"
+        test:
+          - not_null
+      - name: min_workspace_users
+        description: "Min of the user count across all owned workspaces"
+        test:
+          - not_null
+  - name: dim_workspaces
+    description: "Workspace table. Each row represents a unique workspace and all details regarding it"
+    columns:
+      - name: workspace_id
+        description: "ID of the workspace"
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "ID of user who owns the workspace"
+      - name: country_id
+        description: "ID of country of the workspace"
+      - name: created_at
+        description: "Date of creation of the workspace"
+      - name: total_amount_spent
+        description: "Total Amount USD paid by the particular workspace to Toggl"
+      - name: source
+        description: "The source through which user first got to know about Toggl"
+        test:
+          - not_null
+      - name: medium
+        description: "The medium through which user first got to know about Toggl"
+        test:
+          - not_null
+      - name: campaign
+        description: "Campaign through which user was targeted"
+        test:
+          - not_null
+      - name: trial_taken
+        description: "Has the workspace availed its free trial?"
+      - name: max_workspace_users
+        description: "Max of the user count of the workspace across all months"
+        test:
+          - not_null
+      - name: min_workspace_users
+        description: "Min of the user count of the workspace across all months"
+        test:
+          - not_null
+  - name: fct_events
+    description: "Events table. Contains records for all visitors on toggle site. Including those who did not signup. Other details include whether the user requested a demo, their campaign,source etc."
+    columns:
+      - name: user_id
+        description: "ID of the user. Will be blank if the user has not signed up"
+       
+      - name: session_date
+        description: "Date of the activity on toggl site"
+      - name: session_id
+        description: "ID of session"
+      - name: campaign
+        description: "ID of the campaign through which user was targeted"
+      - name: source
+        description: "Source through which user was redirected to toggl site. Empty if organic user"
+      - name: medium
+        description: "Medium through which user was redirected to toggl site. Empty if organic user"
+      - name: requested_demo
+        description: "Whether the user requested the demo"
+        test:
+          - accepted_values:
+                values: [true, false]
+  - name: fct_payments
+    description: "Payments table. Each row represents a unique payment from a workspace to Toggle"
+    columns:
+      - name: charge_month
+        description: "Month for which the payment was made"
+       
+      - name: user_id
+        description: "ID of the workspace owner for which the payment was made"
+      - name: workspace_id
+        description: "Workspace ID for which the payment was made"
+      - name: subscription_period_id
+        description: "ID of the subscription period"
+      - name: pricing_plan_id
+        description: "ID of the pricing plan used by the workspace"
+      - name: plan_name
+        description: "Name of the pricing plan"
+      - name: 	plan_period
+        description: "Annual or monthly plan"
+      - name: campaign
+        description: "ID of the campaign through which owner user was targeted"
+      - name: source
+        description: "Source through which owner user was redirected to toggl site. Empty if organic user"
+      - name: medium
+        description: "Medium through which owner user was redirected to toggl site"
+      - name: is_trial
+        description: "Whether this is a trial month or not. Payment Amount is 0 incase this is true"
+      - name: user_count
+        description: "Number of users in the workspace in the month for"
+      - name: amount_usd
+        description: "Amount USD paid for the particular charge month of subscription"
+      - name: is_reactivated	
+        description: "Whether the workspace is reactivated(Did not have a payment in the last month)."
+        test:
+          - accepted_values:
+                values: [true, false]
+      
+      - name: is_new
+        description: "Whether the workspace is new(Paying toggle for the first time)"
+        test:
+          - accepted_values:
+                values: [true, false]
+      
+      - name: started_on
+        description: "Starting date of the subscription"
+      - name: finished_on
+        description: "Ending date of the subscription. Null if the subscription is still in progress."
+        test:
+          - accepted_values:
+                values: [true, false]
+      
