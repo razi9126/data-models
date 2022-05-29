@@ -128,7 +128,7 @@ models:
         description: "ID of the pricing plan used by the workspace"
       - name: plan_name
         description: "Name of the pricing plan"
-      - name: 	plan_period
+      - name: plan_period
         description: "Annual or monthly plan"
       - name: campaign
         description: "ID of the campaign through which owner user was targeted"
@@ -142,18 +142,16 @@ models:
         description: "Number of users in the workspace in the month for"
       - name: amount_usd
         description: "Amount USD paid for the particular charge month of subscription"
-      - name: is_reactivated	
+      - name: is_reactivated
         description: "Whether the workspace is reactivated(Did not have a payment in the last month)."
         test:
           - accepted_values:
                 values: [true, false]
-      
       - name: is_new
         description: "Whether the workspace is new(Paying toggle for the first time)"
         test:
           - accepted_values:
                 values: [true, false]
-      
       - name: started_on
         description: "Starting date of the subscription"
       - name: finished_on
